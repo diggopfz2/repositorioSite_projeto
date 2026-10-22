@@ -59,56 +59,78 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
   startSlide();
+  const contato = document.getElementById("contato");
+  const nome = document.getElementById("name");
+  const email = document.getElementById("email");
+  const mensagem = document.getElementById("mensagem");
 
-  const contatoForm = document.getElementById("contatoForm")
-  const nome =document.getElementById("nome")
-  const email =document.getElementById("email")
-  const mensagem = document.getElementById("mensagem")
-
-  function isValidEmail(email){
-    const emailRegex= 
-    /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?)*$/;
-   return emailRegex.test(email);
+  function isValidEmail(email) {
+    const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return emailRegex.test(email);
   }
-
-  contatoForm.addEventListener("submit",(event) => {
+  contato.addEventListener("submit", (event) => {
     event.preventDefault();
-
-    function showError(inputElement, mensagem){
-      const formGroup = inputElement.parentElement;
-
-      inputElement.classList.add("input-error");
-      const errorMensagem = document.createElement("small");
-      errorMensagem.className ="error-text";
-      errorMensagem.innerText = mensagem;
-      formGroup.appendChild(errorMensagem);
-      
-      
-    }
-
-    let isvalid = true;
-
-    if(nome.value.trim().length < 3)
-    {
-      showError(nome,"O nome deve ter no minimo 3 caracteres");
-      isvalid = false;
-    }
-
-    if (!isvalidEmail(email.value.trim()))
-    {
-      showError(email,"Insira um e-mail válido");
+    clear
+    let isValid = true;
+    //Validação do campo nome(verificar mínimo 3 caracteres)
+    if (nome.value.trim().length < 3) {
+      showError(nome, "o nome deve ter no mínimo 3 caracteres");
       isValid = false;
     }
-    if(mensagem.value.trim().lenght <10)
-    {
-      showError(mensagem,"A Mensagem deve ter no minimo 10 caracteres");
-      isvalid = false;
+    //Validação do campo email
+    if (!IsValidEmail(email.value.trim())) {
+      showError(email, "Insira um email válido");
+      IsValidEmail = False;
     }
-    if(isvalid)
-    {
+    //Validação do campo mensagem
+    if (mensagem.value.trim().length < 10) {
+      showError(mensagem, "A mensagem deve ter no mínimo 10 caracteres");
+      isValid = false;
+    }
+    //Validar se tudo estiver correto
+    if (isValid) {
       clearError();
-      alert("mensagem enviada com sucesso");
-      contatoForm.reset();
+      alert("Mensagem enviado com sucesso");
+      contato.reset();
     }
   });
+  //remover borda vermelha
+  [nome, email, mensagem].forEach((input) =>{
+    input.addEventListener("input", () => {
+      clearFieldError(input);
+  })});
+  function showError(inputElement, mensagem) {
+    const formGroup = inputElement.parentElement();
+    clearFieldError(inputElement);
+    inputElement.classlist.add("input-error");
+    const errorMensagem = document.createElement("small");
+    errorMensagem.className = "error-text";
+    errorMensagem.innerText = mensagem;
+    formGroup.appendChild(errorMensagem);
+  }
+  function clearFieldError(inputElement) {
+    const formGroup = inputElement.parentElement;
+    inputElement.classlist.remove("input-error");
+    const removerErro = formGroup.querySelector("error-text");
+    if (removerErro) {
+      removerErro.remove();
+    }
+    function clearError() {
+      document.querySelectorAll(".error-text").forEach((el) => el.remove());
+      document
+        .querySelectorAll(".input-error")
+        .forEach((el) => el.classList.remove("input-error"));
+    }
+  }
+    function showToast(mensagem){
+      const toast = document.getElementById("toast");
+      const toastMensagem = document.getElementById("toastMensagem");
+
+      toastMensagem.textContent = mensagem;
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      },3000);
+    }
 }); //Final função evento
+

@@ -75,10 +75,8 @@ document.addEventListener
         });
     });
 
-    //Iniciar os slides de forma automática
     startSlide();
 
-    //Validação campos formulário
     const contatoForm = document.getElementById("contatoForm");
     const name = document.getElementById("name");
     const email = document.getElementById("email");
@@ -96,28 +94,24 @@ document.addEventListener
 
         let isValid = true;
 
-        //Validação do campo nome (mínimo 3 caracteres)
         if(name.value.trim().length < 3)
         {
             showError(name,"O nome deve ter no mínimo três caracteres");
             isValid = false;
         }
 
-        //Verificar se campo e-mail é válido
         if(!isEmailValid(email.value.trim()))
         {
             showError(email,"Insira um e-mail válido");
             isValid = false;
         }
 
-        //Validação do campo mensagem (mínimo 10 caracteres)
         if(mensagem.value.trim().length < 10)
         {
             showError(mensagem,"O campo deve ter no mínimo 10 caracteres");
             isValid = false;
         }
 
-        //Verificar se ocorreu tudo certo
         if(isValid)
         {
             clearError();
@@ -141,7 +135,6 @@ document.addEventListener
 
     }
 
-   //Remover a borda vermelha dos inputs
    [name, email, mensagem].forEach((input) =>{
     input.addEventListener("input", () =>{
         clearFieldError(input);
@@ -159,7 +152,7 @@ document.addEventListener
         formGroup.appendChild(erroMensagem);
     }
 
-    //Remover erro individual do campo
+    
     function clearFieldError(inputElement){
         const formGroup = inputElement.parentElement;
         inputElement.classList.remove("input-error");
@@ -171,7 +164,6 @@ document.addEventListener
         }
     }
 
-    //Remover TODOS os erros do formulario
     function clearError()
     {
         document.querySelectorAll(".error-text")
@@ -187,4 +179,4 @@ document.addEventListener
 
 
 
-}); //Fechamento do evento carregar página html
+}); //Fechamento 
